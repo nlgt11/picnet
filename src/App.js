@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -9,8 +9,15 @@ import store from 'store';
 import Login from 'components/login/Login';
 
 import './App.scss';
+import { loadUser } from './actions/auth';
+import GirdList from 'components/gridlists/GirdList';
+import Upload from 'components/upload/Upload';
 
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
@@ -23,8 +30,11 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/upload">
+            <Upload />
+          </Route>
           <Route path="/">
-            <div>Home page</div>
+            <GirdList />
           </Route>
         </Switch>
       </Router>
