@@ -1,12 +1,12 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import tileData from './tileData';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,8 +29,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const { REACT_APP_BASE_URL } = process.env;
+
 const GirdList = () => {
   const classes = useStyles();
+  const [tileData, setTileData] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get('/pictures');
+        setTileData(
+          response.data.map((tile) => ({
+            ...tile,
+            url: `${REACT_APP_BASE_URL}/${tile.url}`,
+          }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getData();
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -39,17 +60,17 @@ const GirdList = () => {
           <ListSubheader component="div"></ListSubheader>
         </GridListTile>
         {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
+          <GridListTile key={tile.id}>
+            <img src={tile.url} alt={tile.url} />
             <GridListTileBar
-              title={tile.title}
+              title={tile.User.name}
               actionIcon={
                 <IconButton
                   onClick={(e) => console.log('clicl')}
-                  aria-label={`info about ${tile.title}`}
+                  aria-label={`info about ${tile.id}`}
                   className={classes.icon}
                 >
-                  <InfoIcon />
+                  <FavoriteBorderIcon />
                 </IconButton>
               }
             />

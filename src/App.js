@@ -33,7 +33,7 @@ function App() {
           <Route path="/upload">
             <Upload />
           </Route>
-          <Route path="/">
+          <Route path="/pictures">
             <GirdList />
           </Route>
         </Switch>

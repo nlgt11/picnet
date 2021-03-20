@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   spacing: 8,
@@ -29,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Upload = () => {
+const Upload = ({ alert }) => {
+  const history = useHistory();
   const classes = useStyles();
 
   const [selectedImg, setSelectedImg] = useState(null);
@@ -50,7 +52,10 @@ const Upload = () => {
     axios
       .post('/pictures/upload', formData, config)
       .then((response) => {
-        alert('The file is successfully uploaded');
+        history.push({
+          pathname: '/pictures',
+        });
+        // alert('The file is successfully uploaded');
       })
       .catch((error) => {});
   };
