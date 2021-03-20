@@ -1,0 +1,52 @@
+@import 'styles/components/button.scss';
+@import 'styles/reset.scss';
+@import 'styles/variables.scss';
+
+.Register {
+  max-width: 512px;
+  padding: 20px 5%;
+  color: $text-color;
+  font-size: small;
+  h2 {
+    color: $secondary-text-color;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto;
+    border: thin solid #ccc;
+    background-color: $form-background-color;
+    ::placeholder {
+      opacity: 0.6;
+    }
+    &__form-group {
+      display: flex;
+      align-items: baseline;
+      margin: 10px 10px;
+      width: 85%;
+      label {
+        width: 30%;
+      }
+      &__input {
+        width: 70%;
+        input {
+          padding: 5px 5px;
+          height: 1.5rem;
+          width: 100%;
+        }
+        display: flex;
+        flex-direction: column;
+        .error {
+          color: red;
+        }
+      }
+    }
+  }
+  .form-buttons-group {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+}

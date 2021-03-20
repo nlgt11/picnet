@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { register } from 'actions/auth';
+import { login } from 'actions/auth';
 import { Redirect } from 'react-router-dom';
 
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -30,10 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({ register, isAuthenticated, registerSucceeded }) => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
-    name: '',
     password: '',
   });
 
@@ -41,40 +44,24 @@ const Register = ({ register, isAuthenticated, registerSucceeded }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    register(formData);
+    login(formData);
   };
 
   if (isAuthenticated) {
     return <Redirect to="/" />;
   }
 
-  if (isAuthenticated) {
-    return <Redirect to="/" />;
-  }
-  if (registerSucceeded) {
-    return <Redirect to="/login" />;
-  }
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
         <Typography component="h1" variant="h5">
-          Register
+          Sign in
         </Typography>
         <form className={classes.form} onSubmit={handleFormSubmit}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoFocus
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -83,6 +70,8 @@ const Register = ({ register, isAuthenticated, registerSucceeded }) => {
             id="email"
             label="Email Address"
             name="email"
+            autoComplete="email"
+            autoFocus
             value={formData.value}
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
@@ -97,11 +86,11 @@ const Register = ({ register, isAuthenticated, registerSucceeded }) => {
             label="Password"
             type="password"
             id="password"
+            autoComplete="current-password"
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
           />
-
           <Button
             type="submit"
             fullWidth
@@ -109,8 +98,15 @@ const Register = ({ register, isAuthenticated, registerSucceeded }) => {
             color="primary"
             className={classes.submit}
           >
-            Register
+            Sign In
           </Button>
+          <Grid container>
+            <Grid item>
+              <Link href="/register" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
     </Container>
@@ -119,7 +115,5 @@ const Register = ({ register, isAuthenticated, registerSucceeded }) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  registerSucceeded: state.auth.registerSucceeded,
 });
-
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { login })(Login);
