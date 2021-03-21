@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from 'actions/auth';
+import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import PublishIcon from '@material-ui/icons/Publish';
+
+import { MdCloudUpload } from 'react-icons/md';
+import { FaUserFriends } from 'react-icons/fa';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,13 +42,30 @@ const Header = ({ user, isAuthenticated, logout }) => {
               <Button style={{ color: 'white' }} disabled>
                 {user.name}
               </Button>
-              <Button color="inherit" href="/upload">
-                <PublishIcon />
-              </Button>
+
+              <Link to="/upload">
+                <MdCloudUpload
+                  style={{
+                    verticalAlign: 'middle',
+                    color: 'white',
+                    margin: '0 5px',
+                  }}
+                  size={18}
+                />
+              </Link>
+              <Link to="/friends">
+                <FaUserFriends
+                  style={{
+                    verticalAlign: 'middle',
+                    color: 'white',
+                    margin: '0 5px',
+                  }}
+                  size={18}
+                />
+              </Link>
               <Button
                 color="inherit"
                 onClick={() => {
-                  console.log('log out');
                   logout();
                 }}
               >

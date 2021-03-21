@@ -13,6 +13,7 @@ import { loadUser } from './actions/auth';
 import GirdList from 'components/gridlists/GirdList';
 import Upload from 'components/upload/Upload';
 import Friend from 'components/friend/Friend';
+import PrivateRoute from 'components/hoc/PrivateRoute';
 
 function App() {
   useEffect(() => {
@@ -31,15 +32,9 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/upload">
-            <Upload />
-          </Route>
-          <Route path="/pictures">
-            <GirdList />
-          </Route>
-          <Route path="/friends">
-            <Friend />
-          </Route>
+          <PrivateRoute path="/upload" component={Upload} />
+          <PrivateRoute path="/friends" component={Friend} />
+          <PrivateRoute path="/pictures" component={GirdList} />
         </Switch>
       </Router>
     </Provider>

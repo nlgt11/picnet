@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Upload = ({ alert }) => {
+const Upload = () => {
   const history = useHistory();
   const classes = useStyles();
 
