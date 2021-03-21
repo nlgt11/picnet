@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { logout } from 'actions/auth';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,20 +8,22 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@material-ui/icons/Publish';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
   },
+
   title: {
     flexGrow: 1,
   },
 }));
 
-const Header = ({ user, isAuthenticated }) => {
+const Header = ({ user, isAuthenticated, logout }) => {
   const classes = useStyles();
 
   return (
@@ -39,6 +42,15 @@ const Header = ({ user, isAuthenticated }) => {
               <Button color="inherit" href="/upload">
                 <PublishIcon />
               </Button>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  console.log('log out');
+                  logout();
+                }}
+              >
+                <ExitToAppIcon />
+              </Button>
             </div>
           ) : (
             <Button color="inherit" href="/login">
@@ -55,4 +67,5 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps)(Header);
+
+export default connect(mapStateToProps, { logout })(Header);
