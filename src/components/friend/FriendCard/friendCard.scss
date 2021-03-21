@@ -1,0 +1,13 @@
+.FriendCard {
+  font-family: 'Roboto', sans-serif;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 10px 10px 20px -10px rgba(0, 0, 0, 0.75);
+
+  img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+}

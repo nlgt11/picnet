@@ -36,9 +36,8 @@ const Header = ({ user, isAuthenticated }) => {
               <Button style={{ color: 'white' }} disabled>
                 {user.name}
               </Button>
-              <Button color="inherit" href="/pictures">
+              <Button color="inherit" href="/upload">
                 <PublishIcon />
-                Upload Picture
               </Button>
             </div>
           ) : (

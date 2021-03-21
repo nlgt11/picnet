@@ -12,6 +12,7 @@ import './App.scss';
 import { loadUser } from './actions/auth';
 import GirdList from 'components/gridlists/GirdList';
 import Upload from 'components/upload/Upload';
+import Friend from 'components/friend/Friend';
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path="/pictures">
             <GirdList />
+          </Route>
+          <Route path="/friends">
+            <Friend />
           </Route>
         </Switch>
       </Router>
