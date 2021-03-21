@@ -7,6 +7,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,25 +34,38 @@ const { REACT_APP_BASE_URL } = process.env;
 
 const GirdList = () => {
   const classes = useStyles();
-  const [tileData, setTileData] = useState([]);
+  const [allPictures, setAllPictures] = useState([]);
+  const [likedPictures, setLikedPictures] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get('/pictures');
-        setTileData(
+        setAllPictures(
           response.data.map((tile) => ({
             ...tile,
             url: `${REACT_APP_BASE_URL}/${tile.url}`,
           }))
         );
+
+        const res2 = await axios.get('/pictures/like');
+        setLikedPictures(res2.data);
       } catch (error) {
         console.log(error);
       }
     };
 
     getData();
-  }, []);
+  }, [likedPictures]);
+
+  const handleLike = async (id) => {
+    try {
+      const response = await axios.put(`/pictures/like/${id}`);
+      setLikedPictures(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -59,18 +73,22 @@ const GirdList = () => {
         <GridListTile key="Subheader" cols={4} style={{ height: 'auto' }}>
           <ListSubheader component="div"></ListSubheader>
         </GridListTile>
-        {tileData.map((tile) => (
+        {allPictures.map((tile) => (
           <GridListTile key={tile.id}>
             <img src={tile.url} alt={tile.url} />
             <GridListTileBar
               title={tile.User.name}
               actionIcon={
                 <IconButton
-                  onClick={(e) => console.log('clicl')}
+                  onClick={() => handleLike(tile.id)}
                   aria-label={`info about ${tile.id}`}
                   className={classes.icon}
                 >
-                  <FavoriteBorderIcon />
+                  {likedPictures.includes(tile.id) ? (
+                    <FavoriteIcon />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
                 </IconButton>
               }
             />
