@@ -1,5 +1,6 @@
 import axios from 'axios';
 import isEmpty from 'lodash/isEmpty';
+import uniqBy from 'lodash/uniqBy';
 import React, { useEffect, useState } from 'react';
 import FriendCard from './FriendCard/FriendCard';
 
@@ -13,7 +14,7 @@ const Friend = () => {
     const getFriends = async () => {
       try {
         const res = await axios.get('/users/friend/infer');
-        setFriends(res.data);
+        setFriends(uniqBy(res.data, 'id'));
       } catch (error) {
         console.log(error);
       }
